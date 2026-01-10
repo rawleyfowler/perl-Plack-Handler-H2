@@ -1,0 +1,121 @@
+# Perl build artifacts
+Makefile
+Makefile.old
+blib/
+pm_to_blib
+MYMETA.yml
+MYMETA.json
+META.yml
+META.json
+
+# XS and C/C++ build artifacts
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.bs
+*.c
+*.def
+*.exp
+*.lib
+*.pdb
+*.ilk
+*.manifest
+
+# Generated XS files (keep .xs, ignore generated .c)
+lib/Plack/Handler/H2.c
+
+# Test artifacts
+t/*.tmp
+t/*.log
+cover_db/
+*.gcov
+*.gcda
+*.gcno
+
+# Backup and temporary files
+*~
+*.bak
+*.swp
+*.swo
+*~
+.#*
+\#*\#
+
+# Editor directories and files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Distribution files
+Plack-Handler-H2-*.tar.gz
+*.tar
+*.tar.gz
+*.zip
+
+# Testing and coverage
+nytprof/
+nytprof.out
+*.gcov
+*.gcda
+*.gcno
+
+# Temporary test files
+test.c
+test.out
+
+# Carton
+local/
+.carton/
+
+# Module::Build
+Build
+_build/
+Build.PL
+
+# Devel::Cover
+cover_db/
+
+# Dist::Zilla
+/.build/
+Plack-Handler-H2-*/
+
+# IDE specific
+*.sublime-project
+*.sublime-workspace
+.project
+.cproject
+.settings/
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation build
+perldoc.html
+pod2htmd.tmp
+pod2htmi.tmp
+
+# Core dumps
+core
+core.*
+vgcore.*
+
+# Perl module installation
+pm_to_blib
+
+# SSL files
+*.crt
+*.key
+*.pem
+*.der
+
+MANIFEST

@@ -1,0 +1,65 @@
+name: Test Install
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04]
+        perl-version: ['5.40', '5.38', '5.36', '5.34', '5.32', '5.30', '5.28', '5.26', '5.24']
+    name: Perl ${{ matrix.perl-version }} on ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnghttp2-dev \
+            libevent-dev \
+            libssl-dev \
+            g++ \
+            make \
+            pkg-config
+      - name: Set up Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl-version }}
+          install-modules-with: cpanm
+          install-modules-args: --notest
+      - name: Install Perl dependencies
+        run: |
+          cpanm --notest --installdeps .
+      - name: Build module
+        run: |
+          perl Makefile.PL
+          make
+      - name: Create certs
+        run: |
+          openssl req -x509 -newkey rsa:2048 -keyout server.key -out server.crt \
+            -days 365 -nodes -subj "/CN=localhost"
+        env:
+          OPENSSL_CONF: /etc/ssl/openssl.cnf
+      - name: Run tests
+        run: |
+          make test
+        env:
+          SSL_CERT_FILE: server.crt
+          SSL_KEY_FILE: server.key
+          HARNESS_VERBOSE: 1 
+      - name: Test installation
+        run: |
+          make install
+          perl -MPlack::Handler::H2 -e 'print "Successfully loaded Plack::Handler::H2 version $Plack::Handler::H2::VERSION\n"'
+      - name: Display module info
+        run: |
+          perl -MPlack::Handler::H2 -E 'say "Module installed successfully"'
+          perl -e 'use Plack::Handler::H2; print "Available functions: ", join(", ", @Plack::Handler::H2::EXPORT_OK), "\n"'
