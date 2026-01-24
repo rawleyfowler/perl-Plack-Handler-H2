@@ -249,8 +249,6 @@ The handler is designed for high performance:
 - Automatic buffering strategy for request bodies (memory for small, temp files for large)
 - HTTP/2 header compression reduces bandwidth
 
-See `benchmark/` directory for benchmarking tools to compare with other Plack handlers.
-
 ## Testing
 
 Run the test suite:
