@@ -529,10 +529,6 @@ static inline int32_t handle_cv_response(nghttp2_session *ng_session, SV *env,
 
 static inline int32_t on_request(nghttp2_session *ng_session,
                                  H2Session *session, H2Data *data) {
-
-  warn("Received request: method=%s, path=%s",
-       data->method ? data->method->c_str() : "(null)",
-       data->path ? data->path->c_str() : "(null)");
   if (!data->path) {
     if (error_reply(session, data) != 0) {
       return NGHTTP2_ERR_CALLBACK_FAILURE;
