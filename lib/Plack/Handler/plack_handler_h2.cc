@@ -379,8 +379,6 @@ static inline int32_t handle_av_response(nghttp2_session *ng_session,
     return error_reply(session, data);
   }
 
-  sv_dump(*body_sv);
-
   if (body_sv && SvROK(*body_sv)) {
     switch (SvTYPE(SvRV(*body_sv))) {
     case SVt_PVGV: {
